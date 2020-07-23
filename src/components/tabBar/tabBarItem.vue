@@ -45,8 +45,8 @@ export default {
   height: 49px;
   img {
     width: 20px;
-    margin-top: 3px;
-    margin-bottom: 2px;
+    margin-top: 5px;
+    margin-bottom: 1px;
   }
 }
 </style>
