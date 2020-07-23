@@ -17,7 +17,7 @@ export default {
     path: String,
     activeColor: {
       type: String,
-      default: "red"
+      default: "#4a77f5"
     }
   },
   data() {
@@ -44,11 +44,9 @@ export default {
   text-align: center;
   height: 49px;
   img {
-    width: 24px;
-    height: 24px;
-  }
-  .active {
-    color: red;
+    width: 20px;
+    margin-top: 3px;
+    margin-bottom: 2px;
   }
 }
 </style>
