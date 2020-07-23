@@ -36,13 +36,7 @@
     </div>
     <div class="personInfo">
       <div class="title">人员信息</div>
-      <van-tabs
-        v-model="active"
-        animated
-        :border="false"
-        color="#0072ff"
-        title-active-color="#0072ff"
-      >
+      <van-tabs animated :border="false" color="#0072ff" title-active-color="#0072ff">
         <van-tab title="全部">
           <table class="personTable">
             <thead>
@@ -52,6 +46,7 @@
                 <th>级别</th>
                 <th>证书编号</th>
                 <th>到期时间</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -61,6 +56,7 @@
                 <td>高级</td>
                 <td>14015004300125</td>
                 <td>2018-07-14</td>
+                <td><img src="@/assets/img/icon_xq_w.png" style="width:12px" alt=""></td>
               </tr>
             </tbody>
           </table>
@@ -74,6 +70,7 @@
                 <th>级别</th>
                 <th>证书编号</th>
                 <th>到期时间</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -83,6 +80,7 @@
                 <td>高级</td>
                 <td>14015004300125</td>
                 <td>2018-07-14</td>
+                <td><img src="@/assets/img/icon_xq.png" style="width:12px" alt=""></td>
               </tr>
             </tbody>
           </table>
@@ -96,6 +94,7 @@
                 <th>级别</th>
                 <th>证书编号</th>
                 <th>到期时间</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -105,6 +104,7 @@
                 <td>高级</td>
                 <td>14015004300125</td>
                 <td>2018-07-14</td>
+                <td><img src="@/assets/img/icon_xq_w.png" style="width:12px" alt=""></td>
               </tr>
             </tbody>
           </table>
@@ -118,6 +118,7 @@
                 <th>级别</th>
                 <th>证书编号</th>
                 <th>到期时间</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -127,6 +128,7 @@
                 <td>高级</td>
                 <td>14015004300125</td>
                 <td>2018-07-14</td>
+                <td><img src="@/assets/img/icon_xq.png" style="width:12px" alt=""></td>
               </tr>
             </tbody>
           </table>
@@ -140,6 +142,7 @@
                 <th>级别</th>
                 <th>证书编号</th>
                 <th>到期时间</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -149,6 +152,7 @@
                 <td>高级</td>
                 <td>14015004300125</td>
                 <td>2018-07-14</td>
+                <td><img src="@/assets/img/icon_xq.png" style="width:12px" alt=""></td>
               </tr>
             </tbody>
           </table>
@@ -162,6 +166,7 @@
                 <th>级别</th>
                 <th>证书编号</th>
                 <th>到期时间</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -171,6 +176,7 @@
                 <td>高级</td>
                 <td>14015004300125</td>
                 <td>2018-07-14</td>
+                <td><img src="@/assets/img/icon_xq_w.png" style="width:12px" alt=""></td>
               </tr>
             </tbody>
           </table>
@@ -184,6 +190,7 @@
                 <th>级别</th>
                 <th>证书编号</th>
                 <th>到期时间</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -193,6 +200,7 @@
                 <td>高级</td>
                 <td>14015004300125</td>
                 <td>2018-07-14</td>
+                <td><img src="@/assets/img/icon_xq_w.png" style="width:12px" alt=""></td>
               </tr>
             </tbody>
           </table>
@@ -206,16 +214,14 @@
 export default {
   components: {},
   data() {
-    return {
-      active: 2,
-    };
+    return {};
   },
   methods: {},
   created() {},
 };
 </script>
 
-<style lang="scss">
+<style scope lang="scss">
 .header {
   width: 100%;
   height: 65px;
@@ -309,16 +315,10 @@ export default {
     color: #1b1b1b;
     border-bottom: 1px solid #f3f3f3;
   }
-  .van-tab {
-    flex-basis: 19% !important;
-  }
-  .van-tabs__line {
-    width: 7% !important;
-  }
   .personTable {
     width: 100%;
     border-radius: 5px;
-    padding: 20px 15px;
+    padding: 20px 10px;
     margin-top: 15px;
     background-color: #f2f4f8;
     font-size: 10px;
@@ -332,5 +332,19 @@ export default {
   .personTable tr td {
     text-align: center;
   }
+}
+</style>
+<style>
+.van-tabs__nav {
+  padding: 0 10px;
+  justify-content: space-between;
+}
+.van-tab {
+  padding: 0 !important;
+  font-size: 12px !important;
+  flex: none !important;
+}
+.van-tabs__line {
+  width: 7% !important;
 }
 </style>
