@@ -1,5 +1,22 @@
 <template>
   <div>
+    <tab-bar>
+      <tab-bar-item path="/data">
+        <img slot="itemIcon" src="@/assets/img/tabBar/icon_ziliao_w.png" alt />
+        <img slot="itemIconActive" src="@/assets/img/tabBar/icon_ziliao.png" alt />
+        <div slot="itemText">资料</div>
+      </tab-bar-item>
+      <tab-bar-item path="/dealMetter">
+        <img slot="itemIcon" src="@/assets/img/tabBar/icon_banli_w.png" alt />
+        <img slot="itemIconActive" src="@/assets/img/tabBar/icon_banli.png" alt />
+        <div slot="itemText">办理事项</div>
+      </tab-bar-item>
+      <tab-bar-item path="/proFile">
+        <img slot="itemIcon" src="@/assets/img/tabBar/icon_geren_w.png" alt />
+        <img slot="itemIconActive" src="@/assets/img/tabBar/icon_geren.png" alt />
+        <div slot="itemText">个人中心</div>
+      </tab-bar-item>
+    </tab-bar>
     <div class="header">资 料</div>
     <div class="bannerWrap">
       <img src="@/assets/img/banner2.png" alt />
@@ -56,7 +73,9 @@
                 <td>高级</td>
                 <td>14015004300125</td>
                 <td>2018-07-14</td>
-                <td><img src="@/assets/img/icon_xq_w.png" style="width:12px" alt=""></td>
+                <td @click="turnToDetails">
+                  <img src="@/assets/img/icon_xq_w.png" style="width:12px" alt />
+                </td>
               </tr>
             </tbody>
           </table>
@@ -80,7 +99,9 @@
                 <td>高级</td>
                 <td>14015004300125</td>
                 <td>2018-07-14</td>
-                <td><img src="@/assets/img/icon_xq.png" style="width:12px" alt=""></td>
+                <td @click="turnToDetails">
+                  <img src="@/assets/img/icon_xq.png" style="width:12px" alt />
+                </td>
               </tr>
             </tbody>
           </table>
@@ -104,7 +125,9 @@
                 <td>高级</td>
                 <td>14015004300125</td>
                 <td>2018-07-14</td>
-                <td><img src="@/assets/img/icon_xq_w.png" style="width:12px" alt=""></td>
+                <td @click="turnToDetails">
+                  <img src="@/assets/img/icon_xq_w.png" style="width:12px" alt />
+                </td>
               </tr>
             </tbody>
           </table>
@@ -128,7 +151,9 @@
                 <td>高级</td>
                 <td>14015004300125</td>
                 <td>2018-07-14</td>
-                <td><img src="@/assets/img/icon_xq.png" style="width:12px" alt=""></td>
+                <td @click="turnToDetails">
+                  <img src="@/assets/img/icon_xq.png" style="width:12px" alt />
+                </td>
               </tr>
             </tbody>
           </table>
@@ -152,7 +177,9 @@
                 <td>高级</td>
                 <td>14015004300125</td>
                 <td>2018-07-14</td>
-                <td><img src="@/assets/img/icon_xq.png" style="width:12px" alt=""></td>
+                <td @click="turnToDetails">
+                  <img src="@/assets/img/icon_xq.png" style="width:12px" alt />
+                </td>
               </tr>
             </tbody>
           </table>
@@ -176,7 +203,9 @@
                 <td>高级</td>
                 <td>14015004300125</td>
                 <td>2018-07-14</td>
-                <td><img src="@/assets/img/icon_xq_w.png" style="width:12px" alt=""></td>
+                <td @click="turnToDetails">
+                  <img src="@/assets/img/icon_xq_w.png" style="width:12px" alt />
+                </td>
               </tr>
             </tbody>
           </table>
@@ -200,7 +229,9 @@
                 <td>高级</td>
                 <td>14015004300125</td>
                 <td>2018-07-14</td>
-                <td><img src="@/assets/img/icon_xq_w.png" style="width:12px" alt=""></td>
+                <td @click="turnToDetails">
+                  <img src="@/assets/img/icon_xq_w.png" style="width:12px" alt />
+                </td>
               </tr>
             </tbody>
           </table>
@@ -211,17 +242,23 @@
 </template>
 
 <script>
+import tabBar from "@/components/tabBar/tabBar";
+import tabBarItem from "@/components/tabBar/tabBarItem";
 export default {
-  components: {},
+  components: { tabBar, tabBarItem },
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    turnToDetails() {
+      this.$router.push("/personDetails");
+    },
+  },
   created() {},
 };
 </script>
 
-<style scope lang="scss">
+<style scoped lang="scss">
 .header {
   width: 100%;
   height: 65px;

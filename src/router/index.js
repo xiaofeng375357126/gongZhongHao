@@ -4,6 +4,7 @@ import data from '../views/data/data'
 
 const proFile = () => import('../views/proFile/proFile');
 const dealMetter = () => import('../views/dealMetter/dealMetter');
+const personDetails = () => import('../views/personDetails');
 Vue.use(VueRouter)
 
 const routes = [
@@ -25,6 +26,11 @@ const routes = [
     path: '/proFile',
     name: 'proFile',
     component: proFile
+  },
+  {
+    path: '/personDetails',
+    name: 'personDetails',
+    component: personDetails
   }
 ]
 
