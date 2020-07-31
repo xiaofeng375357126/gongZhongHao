@@ -7,7 +7,7 @@
     <div class="personInfoWrap">
       <img class="bgImg" src="@/assets/img/personDetails/bj.png" alt />
       <div class="personInfo">
-        <img class="bgAllImg" src="@/assets/img/personDetails/卡片.png" alt />
+        <img class="bgAllImg" src="@/assets/img/personDetails/kapian.png" alt />
         <div class="photoPic"></div>
         <p class="mainInfo">
           <span class="name">张三</span>

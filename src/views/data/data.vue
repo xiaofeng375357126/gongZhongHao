@@ -26,7 +26,7 @@
       <div class="infoContent">
         <p class="infoItem">
           <span class="infoIcon">公司名称</span>
-          <span>山西众鑫源建筑有限公司</span>
+          <span>{{companyInfo.title}}</span>
         </p>
         <p class="infoItem">
           <span class="infoIcon">统一信用代码</span>
@@ -41,13 +41,13 @@
     <div class="paperInfo">
       <p class="title">证件信息</p>
       <div class="paperImg">
-        <div class="paperImgItem">
-          <div class="img"></div>
-          <p class="imgText">（安许证）</p>
-        </div>
-        <div class="paperImgItem">
-          <div class="img"></div>
-          <p class="imgText">（营业执照）</p>
+        <div class="paperImgItem" v-for="item in companyInfoPic" :key="item.img_urls">
+          <div class="img">
+            <img :src="item.img_urls" />
+            <p
+              class="imgText"
+            >（{{item.type_name.length>10?item.type_name.substring(0,4)+"...":item.type_name}}）</p>
+          </div>
         </div>
       </div>
     </div>
@@ -242,19 +242,54 @@
 </template>
 
 <script>
+import axios from "../../request/index";
 import tabBar from "@/components/tabBar/tabBar";
 import tabBarItem from "@/components/tabBar/tabBarItem";
+axios.defaults.headers.post["Content-Type"] =
+  "application/x-www-form-urlencoded";
 export default {
   components: { tabBar, tabBarItem },
   data() {
-    return {};
+    return {
+      companyInfo: {},
+      companyInfoPic: [],
+    };
   },
   methods: {
+    getData() {
+      axios
+        .post("/api/componyInfo/index", { number: "911401050910319443" })
+        .then((res) => {
+          if (res.code == 1) {
+            for (const item of res.data.picture) {
+              for (const item1 of item.img_urls) {
+                this.companyInfoPic.push({
+                  type: item.type,
+                  type_name: item.type_name,
+                  img_urls: item1,
+                });
+              }
+            }
+            this.companyInfo = res.data;
+          }
+        });
+      axios
+        .post("/api/componyInfo/personnelList", {
+          id: "911401050910319443",
+          member_tab_id: 1,
+        })
+        .then((res) => {
+          if (res.code == 1) {
+          }
+        });
+    },
     turnToDetails() {
       this.$router.push("/personDetails");
     },
   },
-  created() {},
+  created() {
+    this.getData();
+  },
 };
 </script>
 
@@ -313,9 +348,11 @@ export default {
   }
 }
 .paperInfo {
-  padding: 0 15px 15px;
+  padding: 0 11px 15px;
   border-bottom: 10px solid #f2f4f8;
   .title {
+    padding-left: 4px;
+    box-sizing: border-box;
     line-height: 50px;
     font-size: 17px;
     font-weight: 700;
@@ -324,20 +361,22 @@ export default {
   }
   .paperImg {
     display: flex;
-    padding-top: 15px;
+    flex-wrap: wrap;
     .paperImgItem {
-      margin-right: 25px;
+      width: 25%;
+      margin-top: 15px;
       text-align: center;
       .img {
-        width: 82px;
-        height: 110px;
-        background-color: #e4e8ef;
-      }
-      .imgText {
-        margin-top: 10px;
-        font-size: 12px;
-        color: #1b1b1b;
-        opacity: 0.5;
+        img {
+          width: 82px;
+          height: 110px;
+        }
+        .imgText {
+          margin-top: 10px;
+          font-size: 12px;
+          color: #1b1b1b;
+          opacity: 0.5;
+        }
       }
     }
   }
