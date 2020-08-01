@@ -53,7 +53,13 @@
     </div>
     <div class="personInfo">
       <div class="title">人员信息</div>
-      <van-tabs animated :border="false" color="#0072ff" title-active-color="#0072ff">
+      <van-tabs
+        animated
+        :border="false"
+        color="#0072ff"
+        title-active-color="#0072ff"
+        @click="getTableList"
+      >
         <van-tab title="全部">
           <table class="personTable">
             <thead>
@@ -67,7 +73,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item,index) in 4" :key="index">
+              <tr v-for="(item,index) in 6" :key="index">
                 <td>张三</td>
                 <td>张三</td>
                 <td>高级</td>
@@ -80,8 +86,8 @@
             </tbody>
           </table>
         </van-tab>
-        <van-tab title="建造师">
-          <table class="personTable">
+        <van-tab :title="item.type_name" v-for="(item,index) in table.menu" :key="item.id">
+          <table class="personTable" v-if="(index+1)==tabActiveIndex">
             <thead>
               <tr>
                 <th>姓名</th>
@@ -93,142 +99,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item,index) in 4" :key="index">
-                <td>张三</td>
-                <td>张三</td>
-                <td>高级</td>
-                <td>14015004300125</td>
-                <td>2018-07-14</td>
-                <td @click="turnToDetails">
-                  <img src="@/assets/img/icon_xq.png" style="width:12px" alt />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </van-tab>
-        <van-tab title="工程师">
-          <table class="personTable">
-            <thead>
-              <tr>
-                <th>姓名</th>
-                <th>专业</th>
-                <th>级别</th>
-                <th>证书编号</th>
-                <th>到期时间</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(item,index) in 4" :key="index">
-                <td>张三</td>
-                <td>张三</td>
-                <td>高级</td>
-                <td>14015004300125</td>
-                <td>2018-07-14</td>
-                <td @click="turnToDetails">
-                  <img src="@/assets/img/icon_xq_w.png" style="width:12px" alt />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </van-tab>
-        <van-tab title="技工">
-          <table class="personTable">
-            <thead>
-              <tr>
-                <th>姓名</th>
-                <th>专业</th>
-                <th>级别</th>
-                <th>证书编号</th>
-                <th>到期时间</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(item,index) in 4" :key="index">
-                <td>张三</td>
-                <td>张三</td>
-                <td>高级</td>
-                <td>14015004300125</td>
-                <td>2018-07-14</td>
-                <td @click="turnToDetails">
-                  <img src="@/assets/img/icon_xq.png" style="width:12px" alt />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </van-tab>
-        <van-tab title="三类员工">
-          <table class="personTable">
-            <thead>
-              <tr>
-                <th>姓名</th>
-                <th>专业</th>
-                <th>级别</th>
-                <th>证书编号</th>
-                <th>到期时间</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(item,index) in 4" :key="index">
-                <td>张三</td>
-                <td>张三</td>
-                <td>高级</td>
-                <td>14015004300125</td>
-                <td>2018-07-14</td>
-                <td @click="turnToDetails">
-                  <img src="@/assets/img/icon_xq.png" style="width:12px" alt />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </van-tab>
-        <van-tab title="特种工">
-          <table class="personTable">
-            <thead>
-              <tr>
-                <th>姓名</th>
-                <th>专业</th>
-                <th>级别</th>
-                <th>证书编号</th>
-                <th>到期时间</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(item,index) in 4" :key="index">
-                <td>张三</td>
-                <td>张三</td>
-                <td>高级</td>
-                <td>14015004300125</td>
-                <td>2018-07-14</td>
-                <td @click="turnToDetails">
-                  <img src="@/assets/img/icon_xq_w.png" style="width:12px" alt />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </van-tab>
-        <van-tab title="八大员">
-          <table class="personTable">
-            <thead>
-              <tr>
-                <th>姓名</th>
-                <th>专业</th>
-                <th>级别</th>
-                <th>证书编号</th>
-                <th>到期时间</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(item,index) in 4" :key="index">
-                <td>张三</td>
-                <td>张三</td>
-                <td>高级</td>
-                <td>14015004300125</td>
-                <td>2018-07-14</td>
+              <tr v-for="(item1,index) in table.list" :key="index">
+                <td>{{item1.name}}</td>
+                <td>{{item1.major}}</td>
+                <td>{{item1.certificate_level}}</td>
+                <td>{{item1.certificate_id}}</td>
+                <td>{{item1.expire_time}}</td>
                 <td @click="turnToDetails">
                   <img src="@/assets/img/icon_xq_w.png" style="width:12px" alt />
                 </td>
@@ -253,6 +129,8 @@ export default {
     return {
       companyInfo: {},
       companyInfoPic: [],
+      table: [],
+      tabActiveIndex: 0,
     };
   },
   methods: {
@@ -273,13 +151,19 @@ export default {
             this.companyInfo = res.data;
           }
         });
+      this.getTableList();
+    },
+    getTableList(index) {
+      this.tabActiveIndex = index;
+      console.log(index);
       axios
         .post("/api/componyInfo/personnelList", {
-          id: "911401050910319443",
+          id: 1,
           member_tab_id: 1,
         })
         .then((res) => {
           if (res.code == 1) {
+            this.table = res.data;
           }
         });
     },
@@ -410,17 +294,21 @@ export default {
   }
 }
 </style>
-<style>
-.van-tabs__nav {
-  padding: 0 10px;
-  justify-content: space-between;
-}
-.van-tab {
-  padding: 0 !important;
-  font-size: 12px !important;
-  flex: none !important;
-}
-.van-tabs__line {
-  width: 7% !important;
+<style lang="scss">
+.personInfo {
+  .van-tabs__nav {
+    padding: 0 8px !important;
+    justify-content: space-between;
+  }
+  .van-tab {
+    padding: 0 !important;
+    font-size: 12px !important;
+    flex: none !important;
+  }
+  .van-tabs__line {
+    height: 2px !important;
+    bottom: 5px !important;
+    width: 7% !important;
+  }
 }
 </style>

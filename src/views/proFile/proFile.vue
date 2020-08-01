@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="profile">
     <tab-bar>
       <tab-bar-item path="/data">
         <img slot="itemIcon" src="@/assets/img/tabBar/icon_ziliao_w.png" alt />
@@ -17,6 +17,10 @@
         <div slot="itemText">个人中心</div>
       </tab-bar-item>
     </tab-bar>
+    <div class="backgroundPic">
+      <img src="@/assets/img/profile/background.png" alt />
+    </div>
+    <div class="header">个人中心</div>
   </div>
 </template>
 
@@ -33,5 +37,25 @@ export default {
 };
 </script>
 
-<style scoped lang="'scss'">
+<style scoped lang="scss">
+#profile {
+  .backgroundPic {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    img {
+      width: 100%;
+    }
+  }
+  .header {
+    width: 100%;
+    height: 65px;
+    line-height: 90px;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 700;
+    color: #fff;
+  }
+}
 </style>
