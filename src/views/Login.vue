@@ -17,7 +17,7 @@
       </div>
     </form>
     <div class="submitWrap">
-      <button class="submitBtn active">查询并绑定</button>
+      <button class="submitBtn active" @click="loginBtnClick">查询并绑定</button>
     </div>
   </div>
 </template>
@@ -31,6 +31,9 @@ export default {
   methods: {
     routeBack() {
       this.$router.go(-1);
+    },
+    loginBtnClick() {
+      this.$router.push("/data");
     },
   },
   created() {},

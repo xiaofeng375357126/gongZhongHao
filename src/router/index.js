@@ -11,17 +11,17 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/data'
-  },
-  {
-    path: '/data',
-    name: 'data',
-    component: data
+    redirect: '/login'
   },
   {
     path: '/login',
     name: 'login',
     component: login
+  },
+  {
+    path: '/data',
+    name: 'data',
+    component: data
   },
   {
     path: '/dealMetter',
