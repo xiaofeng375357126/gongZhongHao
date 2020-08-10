@@ -73,20 +73,26 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item,index) in 6" :key="index">
-                <td>张三</td>
-                <td>张三</td>
-                <td>高级</td>
-                <td>14015004300125</td>
-                <td>2018-07-14</td>
-                <td @click="turnToDetails">
-                  <img src="@/assets/img/icon_xq_w.png" style="width:12px" alt />
+              <tr v-for="item1 in table.list" :key="item1.id">
+                <td>{{item1.name}}</td>
+                <td>{{item1.major.substring(0,4)}}</td>
+                <td>{{item1.certificate_level}}</td>
+                <td>{{item1.certificate_id}}</td>
+                <td>{{item1.expire_time}}</td>
+                <td>
+                  <img
+                    src="@/assets/img/icon_xq_w.png"
+                    style="width:12px"
+                    @click="turnToDetails"
+                    :data-id="item1.id"
+                    alt
+                  />
                 </td>
               </tr>
             </tbody>
           </table>
         </van-tab>
-        <van-tab :title="item.type_name" v-for="(item,index) in table.menu" :key="item.id">
+        <van-tab :title="item.type_name" v-for="(item,index) in table.menu">
           <table class="personTable" v-if="(index+1)==tabActiveIndex">
             <thead>
               <tr>
@@ -99,14 +105,20 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item1,index) in table.list" :key="index">
+              <tr v-for="item1 in table.list" :key="item1.id">
                 <td>{{item1.name}}</td>
-                <td>{{item1.major}}</td>
+                <td>{{item1.major.substring(0,4)}}</td>
                 <td>{{item1.certificate_level}}</td>
                 <td>{{item1.certificate_id}}</td>
                 <td>{{item1.expire_time}}</td>
-                <td @click="turnToDetails">
-                  <img src="@/assets/img/icon_xq_w.png" style="width:12px" alt />
+                <td>
+                  <img
+                    src="@/assets/img/icon_xq_w.png"
+                    style="width:12px"
+                    @click="turnToDetails($event)"
+                    :data-id="item1.id"
+                    alt
+                  />
                 </td>
               </tr>
             </tbody>
@@ -139,6 +151,16 @@ export default {
         .post("/api/componyInfo/index", { number: "911401050910319443" })
         .then((res) => {
           if (res.code == 1) {
+            axios
+              .post("/api/componyInfo/personnelList", {
+                id: res.data.id,
+                member_tab_id: this.tabActiveIndex,
+              })
+              .then((res) => {
+                if (res.code == 1) {
+                  this.table = res.data;
+                }
+              });
             for (const item of res.data.picture) {
               for (const item1 of item.img_urls) {
                 this.companyInfoPic.push({
@@ -149,17 +171,24 @@ export default {
               }
             }
             this.companyInfo = res.data;
+            localStorage.setItem(
+              "companyInfo",
+              JSON.stringify(this.companyInfo)
+            );
           }
         });
-      this.getTableList();
     },
     getTableList(index) {
-      this.tabActiveIndex = index;
-      console.log(index);
+      if (index) {
+        this.tabActiveIndex = index;
+      } else {
+        this.tabActiveIndex = 0;
+      }
+      console.log(this.tabActiveIndex);
       axios
         .post("/api/componyInfo/personnelList", {
-          id: 1,
-          member_tab_id: 1,
+          id: this.companyInfo.id,
+          member_tab_id: this.tabActiveIndex,
         })
         .then((res) => {
           if (res.code == 1) {
@@ -167,8 +196,13 @@ export default {
           }
         });
     },
-    turnToDetails() {
-      this.$router.push("/personDetails");
+    turnToDetails(event) {
+      this.$router.push({
+        name: "personDetails",
+        params: {
+          id: event.target.dataset.id,
+        },
+      });
     },
   },
   created() {

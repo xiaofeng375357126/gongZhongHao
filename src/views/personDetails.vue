@@ -8,28 +8,30 @@
       <img class="bgImg" src="@/assets/img/personDetails/bj.png" alt />
       <div class="personInfo">
         <img class="bgAllImg" src="@/assets/img/personDetails/kapian.png" alt />
-        <div class="photoPic"></div>
+        <div class="photoPic">
+          <img :src="detailsInfo.id_card_img.url" alt />
+        </div>
         <p class="mainInfo">
-          <span class="name">张三</span>
-          <span class="duty">高级技工-钢筋工</span>
+          <span class="name">{{detailsInfo.name}}</span>
+          <span class="duty">{{detailsInfo.certificate_level}}-{{detailsInfo.major}}</span>
         </p>
         <p class="idCard">
           <span class="idCardNum">身份证号</span>
-          <span>140122*******2566</span>
+          <span>{{detailsInfo.id_card}}</span>
         </p>
         <p class="idCard">
           <span class="cardNum">证件号</span>
-          <span>14015004300125</span>
+          <span>{{detailsInfo.certificate_id}}</span>
         </p>
         <div class="timeGroup">
           <span class="timeTitle">
             <img src="@/assets/img/personDetails/button_01.png" alt />到期时间
           </span>
-          <span class="time">2020-02-02</span>
+          <span class="time">{{detailsInfo.expire_time}}</span>
           <span class="timeTitle">
             <img src="@/assets/img/personDetails/button_01.png" alt />公示时间
           </span>
-          <span class="time">2020-02-02</span>
+          <span class="time">{{detailsInfo.publicity_time}}</span>
         </div>
       </div>
     </div>
@@ -54,17 +56,37 @@
 </template>
 
 <script>
+import axios from "../request/index";
+axios.defaults.headers.post["Content-Type"] =
+  "application/x-www-form-urlencoded";
 export default {
   components: {},
   data() {
-    return {};
+    return {
+      detailsInfo: {
+        id_card_img: {},
+      },
+    };
   },
   methods: {
+    getDetailsData() {
+      axios
+        .post("/api/componyInfo/personDeal", { id: this.$route.params.id })
+        .then((res) => {
+          if (res.code == 1) {
+            this.detailsInfo = res.data[0];
+          }
+          console.log(res);
+        });
+    },
     routeBack() {
       this.$router.go(-1);
     },
   },
-  created() {},
+  created() {
+    console.log(this.$route.params.id);
+    this.getDetailsData();
+  },
 };
 </script>
 
@@ -119,8 +141,12 @@ export default {
       right: 50px;
       width: 66px;
       height: 80px;
-      border-radius: 3px;
       background-color: #486bd3;
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: 3px;
+      }
     }
     .mainInfo {
       margin-bottom: 15px;

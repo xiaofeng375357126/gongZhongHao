@@ -19,7 +19,13 @@
     </tab-bar>
     <div class="header">办理事项</div>
     <div class="mettersWrap">
-      <van-tabs animated :border="false" color="#0072ff" title-active-color="#0072ff">
+      <van-tabs
+        animated
+        :border="false"
+        color="#0072ff"
+        title-active-color="#0072ff"
+        @click="getMetterList"
+      >
         <van-tab title="全部">
           <div class="metterItem">
             <div class="metterItemHead">
@@ -45,7 +51,7 @@
               <span class="labelText">预计需要2个工作日，请您耐心等待...</span>
             </div>
           </div>
-          <div class="metterItem" v-for="item in 5">
+          <div class="metterItem" v-for="item in 5" :key="item">
             <div class="metterItemHead">
               <span>145948894154</span>
               <span>打款验证中</span>
@@ -157,13 +163,28 @@
 <script>
 import tabBar from "@/components/tabBar/tabBar";
 import tabBarItem from "@/components/tabBar/tabBarItem";
+import axios from "../../request";
 export default {
   components: { tabBar, tabBarItem },
   data() {
     return {};
   },
-  methods: {},
-  created() {},
+  methods: {
+    getMetterList(index) {
+      if (index == 0) {
+        index = null;
+      }
+      axios
+        .post("/api/Item/itemIndex", {
+          id: JSON.parse(localStorage.getItem("companyInfo")).id,
+          state: index,
+        })
+        .then((res) => {});
+    },
+  },
+  created() {
+    this.getMetterList();
+  },
 };
 </script>
 

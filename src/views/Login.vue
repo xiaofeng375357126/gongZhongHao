@@ -6,34 +6,51 @@
       <span class="routeBackBtn">×</span>
     </div>
     <div class="title">国图管家</div>
-    <form class="formWrap">
+    <form class="formWrap" :model="loginForm">
       <div>
         <label for="userName" class="label">账号</label>
-        <input id="userName" placeholder="营业执照注册号/手机号" />
+        <input id="userName" v-model="loginForm.number" placeholder="营业执照注册号/手机号" />
       </div>
       <div>
         <label for="passWord" class="label">密码</label>
-        <input id="passWord" placeholder="请输入密码" />
+        <input id="passWord" v-model="loginForm.password" placeholder="请输入密码" />
       </div>
     </form>
     <div class="submitWrap">
       <button class="submitBtn active" @click="loginBtnClick">查询并绑定</button>
+      <button class="WXBtn" @click="WXLoginClick">微信授权登录</button>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "../request/index";
+axios.defaults.headers.post["Content-Type"] =
+  "application/x-www-form-urlencoded";
 export default {
   components: {},
   data() {
-    return {};
+    return {
+      loginForm: {
+        number: "",
+        password: "",
+      },
+    };
   },
   methods: {
     routeBack() {
       this.$router.go(-1);
     },
     loginBtnClick() {
-      this.$router.push("/data");
+      axios.post("/api/WxLogin/checkLogin", this.loginForm).then((res) => {
+        console.log(res);
+        if (res.code == 1) {
+          this.$router.push("/data");
+        }
+      });
+    },
+    WXLoginClick() {
+      axios.get("/api/WxLogin/index");
     },
   },
   created() {},
@@ -104,8 +121,17 @@ export default {
       color: #bcc5dc;
       &.active {
         background: linear-gradient(to right, #027bff 0%, #44baff 100%);
-        color: #ffff;
+        color: #fff;
       }
+    }
+    .WXBtn {
+      border: none;
+      width: 100%;
+      height: 44px;
+      margin-top: 15px;
+      background: #1aad19;
+      border-radius: 3px;
+      color: #fff;
     }
   }
 }
