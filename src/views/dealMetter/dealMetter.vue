@@ -27,131 +27,134 @@
         @click="getMetterList"
       >
         <van-tab title="全部">
-          <div class="metterItem">
-            <div class="metterItemHead">
-              <span>145948894154</span>
-              <span>打款验证中</span>
+          <div class="metterItem" v-for="item in metterList" :key="item.id">
+            <div
+              class="metterItemHead"
+              :style="{'background-color':item.bgColor=='green'?'#1BB39F':item.bgColor=='blue'?'#5A82F0':item.bgColor=='yellow'?'#FF914F':item.bgColor=='red'?'#f34e4e':''}"
+            >
+              <span>{{item.contract_code}}</span>
+              <span>{{item.hands_state}}</span>
             </div>
             <div class="metterItemContent">
               <div class="contentItem">
                 <p class="itemTitle">办理事项</p>
-                <p class="itemText">资质维护</p>
+                <p class="itemText">{{item.bus_type}}</p>
               </div>
               <div class="contentItem">
                 <p class="itemTitle">合同金额</p>
-                <p class="itemText">¥1000</p>
+                <p class="itemText">¥{{item.total_money}}</p>
               </div>
               <div class="contentItem">
                 <p class="itemTitle">已付款</p>
-                <p class="itemText money">¥2000</p>
+                <p class="itemText money">¥{{item.ready_money}}</p>
               </div>
             </div>
             <div class="metterItemBottom">
-              <span class="time">2020-12-12 10:10:10</span>
-              <span class="labelText">预计需要2个工作日，请您耐心等待...</span>
-            </div>
-          </div>
-          <div class="metterItem" v-for="item in 5" :key="item">
-            <div class="metterItemHead">
-              <span>145948894154</span>
-              <span>打款验证中</span>
-            </div>
-            <div class="metterItemContent">
-              <div class="contentItem">
-                <p class="itemTitle">办理事项</p>
-                <p class="itemText">资质维护</p>
-              </div>
-              <div class="contentItem">
-                <p class="itemTitle">合同金额</p>
-                <p class="itemText">¥1000</p>
-              </div>
-              <div class="contentItem">
-                <p class="itemTitle">已付款</p>
-                <p class="itemText money">¥2000</p>
-              </div>
-            </div>
-            <div class="metterItemBottom">
-              <span class="time">2020-12-12 10:10:10</span>
-              <!-- <span class="labelText" >预计需要2个工作日，请您耐心等待...</span> -->
-              <button class="payBtn">支付尾款</button>
+              <span class="time">{{item.update_time}}</span>
+              <button
+                class="payBtn"
+                v-if="item.hands_state_code==2||item.hands_state_code==3||item.hands_state_code==9"
+              >支付尾款</button>
+              <span v-else class="labelText">预计需要2个工作日，请您耐心等待...</span>
             </div>
           </div>
         </van-tab>
         <van-tab title="待付款">
-          <div class="metterItem">
-            <div class="metterItemHead">
-              <span>145948894154</span>
-              <span>打款验证中</span>
+          <div class="metterItem" v-for="item in metterList" :key="item.id">
+            <div
+              class="metterItemHead"
+              :style="{'background-color':item.bgColor=='green'?'#1BB39F':item.bgColor=='blue'?'#5A82F0':item.bgColor=='yellow'?'#FF914F':item.bgColor=='red'?'#f34e4e':''}"
+            >
+              <span>{{item.contract_code}}</span>
+              <span>{{item.hands_state}}</span>
             </div>
             <div class="metterItemContent">
               <div class="contentItem">
                 <p class="itemTitle">办理事项</p>
-                <p class="itemText">资质维护</p>
+                <p class="itemText">{{item.bus_type}}</p>
               </div>
               <div class="contentItem">
                 <p class="itemTitle">合同金额</p>
-                <p class="itemText">¥1000</p>
+                <p class="itemText">¥{{item.total_money}}</p>
               </div>
               <div class="contentItem">
                 <p class="itemTitle">已付款</p>
-                <p class="itemText money">¥2000</p>
+                <p class="itemText money">¥{{item.ready_money}}</p>
               </div>
             </div>
             <div class="metterItemBottom">
-              <span class="time">2020-12-12 10:10:10</span>
-              <span class="labelText">预计需要2个工作日，请您耐心等待...</span>
+              <span class="time">{{item.update_time}}</span>
+              <button
+                class="payBtn"
+                v-if="item.hands_state_code==2||item.hands_state_code==3||item.hands_state_code==9"
+              >支付尾款</button>
+              <span v-else class="labelText">预计需要2个工作日，请您耐心等待...</span>
             </div>
           </div>
         </van-tab>
         <van-tab title="办理中">
-          <div class="metterItem">
-            <div class="metterItemHead">
-              <span>145948894154</span>
-              <span>打款验证中</span>
+          <div class="metterItem" v-for="item in metterList" :key="item.id">
+            <div
+              class="metterItemHead"
+              :style="{'background-color':item.bgColor=='green'?'#1BB39F':item.bgColor=='blue'?'#5A82F0':item.bgColor=='yellow'?'#FF914F':item.bgColor=='red'?'#f34e4e':''}"
+            >
+              <span>{{item.contract_code}}</span>
+              <span>{{item.hands_state}}</span>
             </div>
             <div class="metterItemContent">
               <div class="contentItem">
                 <p class="itemTitle">办理事项</p>
-                <p class="itemText">资质维护</p>
+                <p class="itemText">{{item.bus_type}}</p>
               </div>
               <div class="contentItem">
                 <p class="itemTitle">合同金额</p>
-                <p class="itemText">¥1000</p>
+                <p class="itemText">¥{{item.total_money}}</p>
               </div>
               <div class="contentItem">
                 <p class="itemTitle">已付款</p>
-                <p class="itemText money">¥2000</p>
+                <p class="itemText money">¥{{item.ready_money}}</p>
               </div>
             </div>
             <div class="metterItemBottom">
-              <span class="time">2020-12-12 10:10:10</span>
-              <span class="labelText">预计需要2个工作日，请您耐心等待...</span>
+              <span class="time">{{item.update_time}}</span>
+              <button
+                class="payBtn"
+                v-if="item.hands_state_code==2||item.hands_state_code==3||item.hands_state_code==9"
+              >支付尾款</button>
+              <span v-else class="labelText">预计需要2个工作日，请您耐心等待...</span>
             </div>
           </div>
         </van-tab>
         <van-tab title="已完成">
-          <div class="metterItem">
-            <div class="metterItemHead">
-              <span>145948894154</span>
-              <span>打款验证中</span>
+          <div class="metterItem" v-for="item in metterList" :key="item.id">
+            <div
+              class="metterItemHead"
+              :style="{'background-color':item.bgColor=='green'?'#1BB39F':item.bgColor=='blue'?'#5A82F0':item.bgColor=='yellow'?'#FF914F':item.bgColor=='red'?'#f34e4e':''}"
+            >
+              <span>{{item.contract_code}}</span>
+              <span>{{item.hands_state}}</span>
             </div>
             <div class="metterItemContent">
               <div class="contentItem">
                 <p class="itemTitle">办理事项</p>
-                <p class="itemText">资质维护</p>
+                <p class="itemText">{{item.bus_type}}</p>
               </div>
               <div class="contentItem">
                 <p class="itemTitle">合同金额</p>
-                <p class="itemText">¥1000</p>
+                <p class="itemText">¥{{item.total_money}}</p>
               </div>
               <div class="contentItem">
                 <p class="itemTitle">已付款</p>
-                <p class="itemText money">¥2000</p>
+                <p class="itemText money">¥{{item.ready_money}}</p>
               </div>
             </div>
             <div class="metterItemBottom">
-              <span class="time">2020-12-12 10:10:10</span>
-              <span class="labelText">预计需要2个工作日，请您耐心等待...</span>
+              <span class="time">{{item.update_time}}</span>
+              <button
+                class="payBtn"
+                v-if="item.hands_state_code==2||item.hands_state_code==3||item.hands_state_code==9"
+              >支付尾款</button>
+              <span v-else class="labelText">预计需要2个工作日，请您耐心等待...</span>
             </div>
           </div>
         </van-tab>
@@ -164,22 +167,60 @@
 import tabBar from "@/components/tabBar/tabBar";
 import tabBarItem from "@/components/tabBar/tabBarItem";
 import axios from "../../request";
+import { Toast } from "vant";
 export default {
   components: { tabBar, tabBarItem },
   data() {
-    return {};
+    return {
+      metterList: [],
+    };
   },
   methods: {
     getMetterList(index) {
+      this.metterList = [];
       if (index == 0) {
         index = null;
       }
       axios
         .post("/api/Item/itemIndex", {
-          id: JSON.parse(localStorage.getItem("companyInfo")).id,
+          // id: JSON.parse(localStorage.getItem("companyInfo")).id,
+          id: 1218,
           state: index,
         })
-        .then((res) => {});
+        .then((res) => {
+          Toast.loading({ message: "加载中...", forbidClick: true });
+          if (res.code == 1) {
+            if (res.data.length > 0) {
+              for (const item of res.data) {
+                if (
+                  item.hands_state_code == 2 ||
+                  item.hands_state_code == 3 ||
+                  item.hands_state_code == 9
+                ) {
+                  item.bgColor = "green";
+                } else if (
+                  item.hands_state_code == 4 ||
+                  item.hands_state_code == 5 ||
+                  item.hands_state_code == 6 ||
+                  item.hands_state_code == 7 ||
+                  item.hands_state_code == 8
+                ) {
+                  item.bgColor = "blue";
+                } else if (item.hands_state_code == 12) {
+                  item.bgColor = "yellow";
+                } else if (item.hands_state_code == 11) {
+                  item.bgColor = "red";
+                } else {
+                }
+              }
+              this.metterList = res.data;
+            } else {
+              Toast("暂无数据");
+              return;
+            }
+          }
+          Toast.clear();
+        });
     },
   },
   created() {
@@ -219,7 +260,7 @@ export default {
         justify-content: space-between;
         padding: 0 15px;
         box-sizing: border-box;
-        background-color: #1bb39f;
+        background-color: #b7b9b9;
         font-size: 12px;
         color: #fff;
       }

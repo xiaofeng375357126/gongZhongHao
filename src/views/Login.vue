@@ -2,9 +2,6 @@
   <div id="login">
     <div class="loginBackGroundBig"></div>
     <div class="loginBackGroundSmall"></div>
-    <div class="header">
-      <span class="routeBackBtn">×</span>
-    </div>
     <div class="title">国图管家</div>
     <form class="formWrap" :model="loginForm">
       <div>
@@ -38,9 +35,6 @@ export default {
     };
   },
   methods: {
-    routeBack() {
-      this.$router.go(-1);
-    },
     loginBtnClick() {
       axios.post("/api/WxLogin/checkLogin", this.loginForm).then((res) => {
         console.log(res);
@@ -75,18 +69,10 @@ export default {
     height: 150px;
     background: linear-gradient(to bottom, #e4ebff 0, #ffffff 100%);
   }
-  .header {
-    width: 100%;
-    padding-top: 30px;
-    .routeBackBtn {
-      margin-left: 15px;
-      font-size: 30px;
-    }
-  }
   .title {
     width: 304px;
     margin: 0 auto;
-    margin-top: 45px;
+    padding-top: 100px;
     font-size: 24px;
     color: #000;
   }

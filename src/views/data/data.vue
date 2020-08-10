@@ -58,7 +58,7 @@
         :border="false"
         color="#0072ff"
         title-active-color="#0072ff"
-        @click="getTableList"
+        @click="tabBtnClick"
       >
         <van-tab title="全部">
           <table class="personTable">
@@ -73,7 +73,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item1 in table.list" :key="item1.id">
+              <tr v-for="item1 in tableList" :key="item1.id">
                 <td>{{item1.name}}</td>
                 <td>{{item1.major.substring(0,4)}}</td>
                 <td>{{item1.certificate_level}}</td>
@@ -92,7 +92,7 @@
             </tbody>
           </table>
         </van-tab>
-        <van-tab :title="item.type_name" v-for="(item,index) in table.menu">
+        <van-tab :title="item.type_name" v-for="(item,index) in tableMenu">
           <table class="personTable" v-if="(index+1)==tabActiveIndex">
             <thead>
               <tr>
@@ -105,7 +105,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item1 in table.list" :key="item1.id">
+              <tr v-for="item1 in tableList" :key="item1.id">
                 <td>{{item1.name}}</td>
                 <td>{{item1.major.substring(0,4)}}</td>
                 <td>{{item1.certificate_level}}</td>
@@ -126,6 +126,13 @@
         </van-tab>
       </van-tabs>
     </div>
+    <div class="more">
+      <button
+        class="moreBtn"
+        @click="getMoreBtnClick"
+        v-if="pageInfo.page<pageInfo.last_page"
+      >点击加载更多</button>
+    </div>
   </div>
 </template>
 
@@ -133,6 +140,7 @@
 import axios from "../../request/index";
 import tabBar from "@/components/tabBar/tabBar";
 import tabBarItem from "@/components/tabBar/tabBarItem";
+import { Toast } from "vant";
 axios.defaults.headers.post["Content-Type"] =
   "application/x-www-form-urlencoded";
 export default {
@@ -141,8 +149,15 @@ export default {
     return {
       companyInfo: {},
       companyInfoPic: [],
-      table: [],
-      tabActiveIndex: 0,
+      tableList: [],
+      tableMenu: [],
+      tabActiveIndex: null,
+      pageInfo: {
+        limit: 10,
+        page: 1,
+        total: 0,
+        last_page: 0,
+      },
     };
   },
   methods: {
@@ -151,16 +166,6 @@ export default {
         .post("/api/componyInfo/index", { number: "911401050910319443" })
         .then((res) => {
           if (res.code == 1) {
-            axios
-              .post("/api/componyInfo/personnelList", {
-                id: res.data.id,
-                member_tab_id: this.tabActiveIndex,
-              })
-              .then((res) => {
-                if (res.code == 1) {
-                  this.table = res.data;
-                }
-              });
             for (const item of res.data.picture) {
               for (const item1 of item.img_urls) {
                 this.companyInfoPic.push({
@@ -175,25 +180,44 @@ export default {
               "companyInfo",
               JSON.stringify(this.companyInfo)
             );
+            this.getTableList();
           }
         });
     },
-    getTableList(index) {
-      if (index) {
-        this.tabActiveIndex = index;
-      } else {
-        this.tabActiveIndex = 0;
-      }
-      console.log(this.tabActiveIndex);
+
+    getMoreBtnClick() {
+      this.pageInfo.page += 1;
+      this.getTableList();
+    },
+    tabBtnClick(index) {
+      this.tableList = [];
+      this.tabActiveIndex = index;
+      this.pageInfo.page = 1;
+      this.getTableList();
+    },
+    getTableList() {
       axios
         .post("/api/componyInfo/personnelList", {
           id: this.companyInfo.id,
           member_tab_id: this.tabActiveIndex,
+          limit: this.pageInfo.limit,
+          page: this.pageInfo.page,
         })
         .then((res) => {
+          Toast.loading({ message: "加载中...", forbidClick: true });
           if (res.code == 1) {
-            this.table = res.data;
+            if (!res.data.list.data.length > 0) {
+              Toast("暂无数据");
+              this.pageInfo.last_page = res.data.list.last_page;
+              this.tableList = [];
+              this.tableMenu = res.data.menu;
+              return;
+            }
+            this.tableMenu = res.data.menu;
+            this.tableList = this.tableList.concat(res.data.list.data);
+            this.pageInfo.last_page = res.data.list.last_page;
           }
+          Toast.clear();
         });
     },
     turnToDetails(event) {
@@ -301,7 +325,6 @@ export default {
 }
 .personInfo {
   padding: 0 15px 15px;
-  margin-bottom: 100px;
   .title {
     line-height: 50px;
     font-size: 17px;
@@ -325,6 +348,17 @@ export default {
   }
   .personTable tr td {
     text-align: center;
+  }
+}
+.more {
+  height: 1px;
+  margin-bottom: 100px;
+  text-align: center;
+  .moreBtn {
+    background: none;
+    border: none;
+    font-size: 14px;
+    color: #999;
   }
 }
 </style>
