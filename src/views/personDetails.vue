@@ -20,7 +20,7 @@
           <span>{{detailsInfo.id_card}}</span>
         </p>
         <p class="idCard">
-          <span class="cardNum">证件号</span>
+          <span class="idCardNum">证书编号</span>
           <span>{{detailsInfo.certificate_id}}</span>
         </p>
         <div class="timeGroup">
@@ -38,17 +38,41 @@
     <div class="paperInfo">
       <p class="title">证件图片</p>
       <div class="paperImg">
-        <div class="paperImgItem">
-          <div class="img"></div>
-          <p class="imgText">（安许证）</p>
+        <div class="paperImgItem" v-if="detailsInfo.id_card_img">
+          <div class="img">
+            <img :src="detailsInfo.id_card_img.url" alt />
+          </div>
+          <p class="imgText">身份证</p>
         </div>
-        <div class="paperImgItem">
-          <div class="img"></div>
-          <p class="imgText">（营业执照）</p>
+        <div class="paperImgItem" v-if="detailsInfo.certificate_img">
+          <div class="img">
+            <img :src="detailsInfo.certificate_img.url" alt />
+          </div>
+          <p class="imgText">证书</p>
         </div>
-        <div class="paperImgItem">
-          <div class="img"></div>
-          <p class="imgText">（营业执照）</p>
+        <div class="paperImgItem" v-if="detailsInfo.register_cert">
+          <div class="img">
+            <img :src="detailsInfo.register_cert.url" alt />
+          </div>
+          <p class="imgText">注册证</p>
+        </div>
+        <div class="paperImgItem" v-if="detailsInfo.zige_cert">
+          <div class="img">
+            <img :src="detailsInfo.zige_cert.url" alt />
+          </div>
+          <p class="imgText">资格证</p>
+        </div>
+        <div class="paperImgItem" v-if="detailsInfo.diploma_cert">
+          <div class="img">
+            <img :src="detailsInfo.diploma_cert.url" alt />
+          </div>
+          <p class="imgText">毕业证</p>
+        </div>
+        <div class="paperImgItem" v-if="detailsInfo.zhuli_cert">
+          <div class="img">
+            <img :src="detailsInfo.zhuli_cert.url" alt />
+          </div>
+          <p class="imgText">助理工程师</p>
         </div>
       </div>
     </div>
@@ -109,8 +133,8 @@ export default {
 .personInfoWrap {
   position: relative;
   width: 100%;
-  height: 225px;
-  padding-top: 45px;
+  height: 230px;
+  padding: 30px;
   box-sizing: border-box;
   .bgImg {
     position: absolute;
@@ -118,11 +142,12 @@ export default {
     left: 0;
     z-index: -2;
     width: 100%;
+    height: 100%;
   }
   .personInfo {
     position: relative;
-    width: 345px;
-    height: 160px;
+    width: 100%;
+    height: 100%;
     padding-left: 20px;
     padding-top: 25px;
     margin: 0 auto;
@@ -134,6 +159,7 @@ export default {
       left: 0;
       z-index: -1;
       width: 100%;
+      height: 100%;
     }
     .photoPic {
       position: absolute;
@@ -167,11 +193,6 @@ export default {
         display: inline-block;
         width: 50px;
         margin-right: 5px;
-      }
-      .cardNum {
-        display: inline-block;
-        width: 54px;
-        letter-spacing: 6px;
       }
     }
     .timeGroup {
@@ -212,14 +233,20 @@ export default {
   .paperImg {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     padding-top: 15px;
     .paperImgItem {
       width: 100px;
+      margin-bottom: 15px;
       text-align: center;
       .img {
         width: 100%;
         height: 125px;
-        background-color: #e4e8ef;
+        box-shadow: 0 0 2px 2px #f3f3f3;
+        img {
+          width: 100%;
+          height: 100%;
+        }
       }
       .imgText {
         margin-top: 10px;

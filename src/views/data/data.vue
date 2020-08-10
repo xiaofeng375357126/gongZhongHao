@@ -32,10 +32,6 @@
           <span class="infoIcon">统一信用代码</span>
           <span class="infoCode">91140105MDF563DFFS225</span>
         </p>
-        <p class="infoItem">
-          <span class="infoIcon">公司名称</span>
-          <span>山西众鑫源建筑有限公司</span>
-        </p>
       </div>
     </div>
     <div class="paperInfo">
@@ -264,7 +260,6 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 113px;
     padding: 15px 10px;
     border-radius: 5px;
     box-sizing: border-box;
@@ -272,6 +267,7 @@ export default {
     .infoItem {
       font-size: 14px;
       color: #333;
+      line-height: 32px;
       .infoIcon {
         display: inline-block;
         padding: 0 12px;
