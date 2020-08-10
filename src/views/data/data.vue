@@ -196,6 +196,7 @@ export default {
       this.getTableList();
     },
     getTableList() {
+      Toast.loading({ message: "加载中...", forbidClick: true });
       axios
         .post("/api/componyInfo/personnelList", {
           id: this.companyInfo.id,
@@ -204,7 +205,6 @@ export default {
           page: this.pageInfo.page,
         })
         .then((res) => {
-          Toast.loading({ message: "加载中...", forbidClick: true });
           if (res.code == 1) {
             if (!res.data.list.data.length > 0) {
               Toast("暂无数据");

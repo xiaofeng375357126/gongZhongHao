@@ -10,7 +10,7 @@
       </div>
       <div>
         <label for="passWord" class="label">密码</label>
-        <input id="passWord" v-model="loginForm.password" placeholder="请输入密码" />
+        <input id="passWord" type="password" v-model="loginForm.password" placeholder="请输入密码" />
       </div>
     </form>
     <div class="submitWrap">
@@ -24,6 +24,7 @@
 import axios from "../request/index";
 axios.defaults.headers.post["Content-Type"] =
   "application/x-www-form-urlencoded";
+import { Toast } from "vant";
 export default {
   components: {},
   data() {
@@ -36,12 +37,18 @@ export default {
   },
   methods: {
     loginBtnClick() {
-      axios.post("/api/WxLogin/checkLogin", this.loginForm).then((res) => {
-        console.log(res);
-        if (res.code == 1) {
-          this.$router.push("/data");
-        }
-      });
+      if (!/^[a-zA-Z0-9]{4,23}$/.test(this.loginForm.number)) {
+        Toast("请输入正确的账号");
+      } else {
+        Toast.loading({ message: "登录中...", forbidClick: true });
+        axios.post("/api/WxLogin/checkLogin", this.loginForm).then((res) => {
+          if (res.code == 1) {
+            this.$router.push("/data");
+          } else {
+            Toast("账号或密码不正确");
+          }
+        });
+      }
     },
     WXLoginClick() {
       axios.get("/api/WxLogin/index");
