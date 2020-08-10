@@ -32,7 +32,7 @@
         <img src="@/assets/img/profile/danweibangding.png" alt />
         <p>单位绑定</p>
       </div>
-      <div class="actionItem">
+      <div class="actionItem" @click="turnToPayment">
         <img src="@/assets/img/profile/zhifujilu.png" alt />
         <p>支付记录</p>
       </div>
@@ -52,7 +52,11 @@ export default {
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    turnToPayment(){
+      this.$router.push("/payment");
+    }
+  },
   created() {},
 };
 </script>

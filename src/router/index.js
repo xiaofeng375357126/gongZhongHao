@@ -5,6 +5,7 @@ import data from '../views/data/data'
 const proFile = () => import('../views/proFile/proFile');
 const dealMetter = () => import('../views/dealMetter/dealMetter');
 const personDetails = () => import('../views/personDetails');
+const payment = () => import('../views/payment');
 const login = () => import('../views/Login');
 Vue.use(VueRouter)
 
@@ -37,6 +38,11 @@ const routes = [
     path: '/personDetails',
     name: 'personDetails',
     component: personDetails
+  },
+  {
+    path: '/payment',
+    name: 'payment',
+    component: payment
   }
 ]
 
