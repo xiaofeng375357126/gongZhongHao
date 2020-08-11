@@ -14,25 +14,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>资质</td>
-            <td>15000</td>
-            <td>2020-2-12 11:11:11</td>
-          </tr>
-          <tr>
-            <td>资质升级-首付款</td>
-            <td>15000</td>
-            <td>2020-2-12 11:11:11</td>
-          </tr>
-          <tr>
-            <td>资质升级-首付款qwefe</td>
-            <td>15000</td>
-            <td>2020-2-12 11:11:11</td>
-          </tr>
-          <tr>
-            <td>资质升</td>
-            <td>15000</td>
-            <td>2020-2-12 11:11:11</td>
+          <tr v-for="item in tableData" :key="item.id">
+            <td>{{item.bus_type}}</td>
+            <td>{{item.money}}</td>
+            <td>{{item.create_time}}</td>
           </tr>
         </tbody>
       </table>
@@ -48,17 +33,25 @@ export default {
   components: {},
   data() {
     return {
-      detailsInfo: {
-        id_card_img: {},
-      },
+      tableData: [],
     };
   },
   methods: {
+    getTableList() {
+      axios.post("/api/Item/payRecord", { id: 1218 }).then((res) => {
+        console.log(res);
+        if (res.code == 1) {
+          this.tableData = res.data;
+        }
+      });
+    },
     routeBack() {
       this.$router.go(-1);
     },
   },
-  created() {},
+  created() {
+    this.getTableList();
+  },
 };
 </script>
 

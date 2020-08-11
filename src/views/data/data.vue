@@ -30,7 +30,7 @@
         </p>
         <p class="infoItem">
           <span class="infoIcon">统一信用代码</span>
-          <span class="infoCode">91140105MDF563DFFS225</span>
+          <span class="infoCode">{{companyInfo.certificate_number}}</span>
         </p>
       </div>
     </div>

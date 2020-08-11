@@ -51,14 +51,8 @@ export default {
       }
     },
     WXLoginClick() {
-      axios.get("/api/WxLogin/index");
-      // https://open.weixin.qq.com/connect/oauth2/authorize?
-      // appid=wxce4586d84f4046d5
-      // &redirect_uri=http%3A%2F%2Fguotujt.com%2Fapi%2FWxLogin%2Findex&response_type=code
-      // &scope=snsapi_userinfo&state=1
-      // &uin=MjY3MzI0OTEzMw%3D%3D
-      // &key=3fbca09dbecaabca0f334352c25262120f04ae5874e2e5306b6713607ec420195e6d775255578e7556b1c6669bb897b8
-      // &pass_ticket=ZI67KPtDsDxlgzSPNdN07cDoNYu18dwa1drtPKo013h+AHJHsiQebIBRotw9b3mBsDPU/2M8TyaXVNwk9s72Jg==
+      // axios.get("/api/WxLogin/index");
+      window.location.href = "http://www.guotujt.com/api/WxLogin/index";
     },
   },
   created() {},
