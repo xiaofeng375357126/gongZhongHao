@@ -51,7 +51,11 @@ export default {
       }
     },
     WXLoginClick() {
-      window.location.href = "http://www.guotujt.com/api/WxLogin/index";
+      axios.get("http://www.guotujt.com/api/WxLogin/index").then((res) => {
+        console.log(1111);
+        console.log(res);
+      });
+      // window.location.href = "http://www.guotujt.com/api/WxLogin/index";
     },
   },
   created() {},
