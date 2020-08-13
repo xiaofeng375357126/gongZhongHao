@@ -183,12 +183,15 @@ export default {
       }
       axios
         .post("/api/Item/itemIndex", {
-          // id: JSON.parse(localStorage.getItem("companyInfo")).id,
-          id: 1218,
+          id: JSON.parse(localStorage.getItem("data")).compony_id,
           state: index,
         })
         .then((res) => {
-          Toast.loading({ message: "加载中...", forbidClick: true });
+          Toast.loading({
+            message: "加载中...",
+            forbidClick: true,
+            className: "dealMetterToastStyle",
+          });
           if (res.code == 1) {
             if (res.data.length > 0) {
               for (const item of res.data) {
@@ -215,7 +218,7 @@ export default {
               }
               this.metterList = res.data;
             } else {
-              Toast("暂无数据");
+              Toast({ message: "暂无数据", className: "dealMetterToastStyle" });
               return;
             }
           }
@@ -333,5 +336,8 @@ export default {
     bottom: 0px !important;
     width: 7% !important;
   }
+}
+.dealMetterToastStyle {
+  top: 35%;
 }
 </style>

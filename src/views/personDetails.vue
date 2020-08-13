@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="header">
-      <img class="routeBackBtn" src="@/assets/img/personDetails/icon_gd.png" alt @click="routeBack" />
       <span>人员详情</span>
     </div>
     <div class="personInfoWrap">
@@ -40,42 +39,73 @@
       <div class="paperImg">
         <div class="paperImgItem" v-if="detailsInfo.id_card_img">
           <div class="img">
-            <img :src="detailsInfo.id_card_img.url" alt />
+            <img
+              :src="detailsInfo.id_card_img.url"
+              :data-src="detailsInfo.id_card_img.url"
+              @click="imgItemClick"
+            />
           </div>
           <p class="imgText">身份证</p>
         </div>
         <div class="paperImgItem" v-if="detailsInfo.certificate_img">
           <div class="img">
-            <img :src="detailsInfo.certificate_img.url" alt />
+            <img
+              :src="detailsInfo.certificate_img.url"
+              :data-src="detailsInfo.certificate_img.url"
+              @click="imgItemClick"
+            />
           </div>
           <p class="imgText">证书</p>
         </div>
         <div class="paperImgItem" v-if="detailsInfo.register_cert">
           <div class="img">
-            <img :src="detailsInfo.register_cert.url" alt />
+            <img
+              :src="detailsInfo.register_cert.url"
+              :data-src="detailsInfo.register_cert.url"
+              @click="imgItemClick"
+            />
           </div>
           <p class="imgText">注册证</p>
         </div>
         <div class="paperImgItem" v-if="detailsInfo.zige_cert">
           <div class="img">
-            <img :src="detailsInfo.zige_cert.url" alt />
+            <img
+              :src="detailsInfo.zige_cert.url"
+              :data-src="detailsInfo.zige_cert.url"
+              @click="imgItemClick"
+            />
           </div>
           <p class="imgText">资格证</p>
         </div>
         <div class="paperImgItem" v-if="detailsInfo.diploma_cert">
           <div class="img">
-            <img :src="detailsInfo.diploma_cert.url" alt />
+            <img
+              :src="detailsInfo.diploma_cert.url"
+              :data-src="detailsInfo.diploma_cert.url"
+              @click="imgItemClick"
+            />
           </div>
           <p class="imgText">毕业证</p>
         </div>
         <div class="paperImgItem" v-if="detailsInfo.zhuli_cert">
           <div class="img">
-            <img :src="detailsInfo.zhuli_cert.url" alt />
+            <img
+              :src="detailsInfo.zhuli_cert.url"
+              :data-src="detailsInfo.zhuli_cert.url"
+              @click="imgItemClick"
+            />
           </div>
           <p class="imgText">助理工程师</p>
         </div>
       </div>
     </div>
+    <van-overlay :show="maskShow" @click="maskShow = false">
+      <div class="wrapper">
+        <div class="block" @click.stop>
+          <img :src="maskImgSrc" />
+        </div>
+      </div>
+    </van-overlay>
   </div>
 </template>
 
@@ -90,6 +120,8 @@ export default {
       detailsInfo: {
         id_card_img: {},
       },
+      maskShow: false,
+      maskImgSrc: "",
     };
   },
   methods: {
@@ -100,15 +132,17 @@ export default {
           if (res.code == 1) {
             this.detailsInfo = res.data[0];
           }
-          console.log(res);
         });
+    },
+    imgItemClick(e) {
+      this.maskImgSrc = e.target.dataset.src;
+      this.maskShow = true;
     },
     routeBack() {
       this.$router.go(-1);
     },
   },
   created() {
-    console.log(this.$route.params.id);
     this.getDetailsData();
   },
 };
@@ -116,19 +150,12 @@ export default {
 
 <style scoped lang="scss">
 .header {
-  position: relative;
   width: 100%;
   height: 65px;
   line-height: 90px;
   font-size: 17px;
   font-weight: 700;
   text-align: center;
-  .routeBackBtn {
-    position: absolute;
-    left: 15px;
-    top: 38px;
-    width: 9px;
-  }
 }
 .personInfoWrap {
   position: relative;
@@ -254,6 +281,23 @@ export default {
         color: #1b1b1b;
         opacity: 0.5;
       }
+    }
+  }
+}
+.van-overlay {
+  z-index: 100;
+  .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+  .block {
+    width: 100%;
+    height: 65%;
+    img {
+      width: 100%;
+      height: 100%;
     }
   }
 }

@@ -1,9 +1,7 @@
 <template>
   <div id="login">
-    <div class="loginBackGroundBig"></div>
-    <div class="loginBackGroundSmall"></div>
     <div class="title">国图管家</div>
-    <form class="formWrap" :model="loginForm">
+    <form class="formWrap">
       <div>
         <label for="userName" class="label">账号</label>
         <input id="userName" v-model="loginForm.number" placeholder="营业执照注册号/手机号" />
@@ -37,13 +35,15 @@ export default {
   },
   methods: {
     loginBtnClick() {
+      Toast({ message: "请使用微信授权登录", className: "loginToastStyle" });
+      return;
       if (!/^[a-zA-Z0-9]{4,23}$/.test(this.loginForm.number)) {
         Toast("请输入正确的账号");
       } else {
         Toast.loading({ message: "登录中...", forbidClick: true });
         axios.post("/api/WxLogin/checkLogin", this.loginForm).then((res) => {
           if (res.code == 1) {
-            this.$router.push("/data");
+            this.$router.push("/proFile");
           } else {
             Toast("账号或密码不正确");
           }
@@ -51,11 +51,7 @@ export default {
       }
     },
     WXLoginClick() {
-      axios.get("http://www.guotujt.com/api/WxLogin/index").then((res) => {
-        console.log(1111);
-        console.log(res);
-      });
-      // window.location.href = "http://www.guotujt.com/api/WxLogin/index";
+      window.location.href = "http://www.guotujt.com/api/WxLogin/authorization";
     },
   },
   created() {},
@@ -64,26 +60,10 @@ export default {
 
 <style scoped lang="scss">
 #login {
-  .loginBackGroundBig {
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 101px;
-    height: 230px;
-    background: linear-gradient(to bottom, #d4ddff 0%, #ffffff 100%);
-  }
-  .loginBackGroundSmall {
-    position: absolute;
-    right: 101px;
-    top: 0;
-    width: 101px;
-    height: 150px;
-    background: linear-gradient(to bottom, #e4ebff 0, #ffffff 100%);
-  }
   .title {
     width: 304px;
     margin: 0 auto;
-    padding-top: 100px;
+    padding-top: 80px;
     font-size: 24px;
     color: #000;
   }
@@ -131,5 +111,10 @@ export default {
       color: #fff;
     }
   }
+}
+</style>
+<style>
+.loginToastStyle {
+  top: 35%;
 }
 </style>

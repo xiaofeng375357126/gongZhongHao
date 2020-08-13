@@ -38,12 +38,15 @@ export default {
   },
   methods: {
     getTableList() {
-      axios.post("/api/Item/payRecord", { id: 1218 }).then((res) => {
-        console.log(res);
-        if (res.code == 1) {
-          this.tableData = res.data;
-        }
-      });
+      axios
+        .post("/api/Item/payRecord", {
+          id: JSON.parse(localStorage.getItem("data")).compony_id,
+        })
+        .then((res) => {
+          if (res.code == 1) {
+            this.tableData = res.data;
+          }
+        });
     },
     routeBack() {
       this.$router.go(-1);

@@ -20,6 +20,7 @@
     <div class="header">资 料</div>
     <div class="bannerWrap">
       <img src="@/assets/img/banner2.png" alt />
+      <p>{{companyInfo.title}}</p>
     </div>
     <div class="baseInfo">
       <p class="title">基本信息</p>
@@ -39,7 +40,7 @@
       <div class="paperImg">
         <div class="paperImgItem" v-for="item in companyInfoPic" :key="item.img_urls">
           <div class="img">
-            <img :src="item.img_urls" />
+            <img :src="item.img_urls" :data-src="item.img_urls" @click="imgItemClick" />
             <p
               class="imgText"
             >（{{item.type_name.length>10?item.type_name.substring(0,4)+"...":item.type_name}}）</p>
@@ -121,6 +122,7 @@
           </table>
         </van-tab>
       </van-tabs>
+      <div class="noPersonInfo" v-show="tableList.length==0">暂无数据</div>
     </div>
     <div class="more">
       <button
@@ -129,6 +131,13 @@
         v-if="pageInfo.page<pageInfo.last_page"
       >点击加载更多</button>
     </div>
+    <van-overlay :show="maskShow" @click="maskShow = false">
+      <div class="wrapper">
+        <div class="block" @click.stop>
+          <img :src="maskImgSrc" />
+        </div>
+      </div>
+    </van-overlay>
   </div>
 </template>
 
@@ -154,12 +163,17 @@ export default {
         total: 0,
         last_page: 0,
       },
+      maskShow: false,
+      maskImgSrc: "",
     };
   },
   methods: {
     getData() {
       axios
-        .post("/api/componyInfo/index", { number: "911401050910319443" })
+        .post("/api/componyInfo/index", {
+          number: localStorage.getItem("number"),
+          // number: "91140100MAOHAT5M83",
+        })
         .then((res) => {
           if (res.code == 1) {
             for (const item of res.data.picture) {
@@ -192,10 +206,14 @@ export default {
       this.getTableList();
     },
     getTableList() {
-      Toast.loading({ message: "加载中...", forbidClick: true });
+      Toast.loading({
+        message: "加载中...",
+        forbidClick: true,
+        position: "bottom",
+      });
       axios
         .post("/api/componyInfo/personnelList", {
-          id: this.companyInfo.id,
+          id: JSON.parse(localStorage.getItem("data")).compony_id,
           member_tab_id: this.tabActiveIndex,
           limit: this.pageInfo.limit,
           page: this.pageInfo.page,
@@ -203,7 +221,6 @@ export default {
         .then((res) => {
           if (res.code == 1) {
             if (!res.data.list.data.length > 0) {
-              Toast("暂无数据");
               this.pageInfo.last_page = res.data.list.last_page;
               this.tableList = [];
               this.tableMenu = res.data.menu;
@@ -215,6 +232,10 @@ export default {
           }
           Toast.clear();
         });
+    },
+    imgItemClick(e) {
+      this.maskImgSrc = e.target.dataset.src;
+      this.maskShow = true;
     },
     turnToDetails(event) {
       this.$router.push({
@@ -242,9 +263,25 @@ export default {
   font-weight: 700;
 }
 .bannerWrap {
+  position: relative;
+  width: 100%;
+  height: 134px;
   padding: 10px;
+  box-sizing: border-box;
   img {
     width: 100%;
+    height: 100%;
+  }
+  p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: center;
+    letter-spacing: 3px;
+    color: #fff;
+    font-size: 18px;
   }
 }
 .baseInfo {
@@ -345,6 +382,11 @@ export default {
   .personTable tr td {
     text-align: center;
   }
+  .noPersonInfo {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+  }
 }
 .more {
   height: 1px;
@@ -355,6 +397,23 @@ export default {
     border: none;
     font-size: 14px;
     color: #999;
+  }
+}
+.van-overlay {
+  z-index: 100;
+  .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+  .block {
+    width: 100%;
+    height: 65%;
+    img {
+      width: 100%;
+      height: 100%;
+    }
   }
 }
 </style>
