@@ -1,14 +1,11 @@
 <template>
   <div>
-    <div class="header">
-      <span>人员详情</span>
-    </div>
     <div class="personInfoWrap">
       <img class="bgImg" src="@/assets/img/personDetails/bj.png" alt />
       <div class="personInfo">
         <img class="bgAllImg" src="@/assets/img/personDetails/kapian.png" alt />
         <div class="photoPic">
-          <img :src="detailsInfo.id_card_img.url" alt />
+          <img v-if="detailsInfo.photo" :src="detailsInfo.photo.url" alt />
         </div>
         <p class="mainInfo">
           <span class="name">{{detailsInfo.name}}</span>
@@ -130,6 +127,7 @@ export default {
         .post("/api/componyInfo/personDeal", { id: this.$route.params.id })
         .then((res) => {
           if (res.code == 1) {
+            console.log(res.data[0])
             this.detailsInfo = res.data[0];
           }
         });
@@ -149,14 +147,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.header {
-  width: 100%;
-  height: 65px;
-  line-height: 90px;
-  font-size: 17px;
-  font-weight: 700;
-  text-align: center;
-}
 .personInfoWrap {
   position: relative;
   width: 100%;
@@ -191,7 +181,7 @@ export default {
     .photoPic {
       position: absolute;
       top: 20px;
-      right: 50px;
+      right: 15px;
       width: 66px;
       height: 80px;
       background-color: #486bd3;

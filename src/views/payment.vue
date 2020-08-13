@@ -1,9 +1,5 @@
 <template>
   <div>
-    <div class="header">
-      <img class="routeBackBtn" src="@/assets/img/personDetails/icon_gd.png" alt @click="routeBack" />
-      <span>支付纪录</span>
-    </div>
     <div class="payTableWrap">
       <table>
         <thead>
@@ -40,7 +36,7 @@ export default {
     getTableList() {
       axios
         .post("/api/Item/payRecord", {
-          id: JSON.parse(localStorage.getItem("data")).compony_id,
+          id: JSON.parse(localStorage.getItem("data")).company_id,
         })
         .then((res) => {
           if (res.code == 1) {
@@ -59,22 +55,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.header {
-  position: relative;
-  width: 100%;
-  height: 65px;
-  line-height: 90px;
-  font-size: 17px;
-  font-weight: 700;
-  text-align: center;
-  border-bottom: 1px solid #f2f2f2;
-  .routeBackBtn {
-    position: absolute;
-    left: 15px;
-    top: 38px;
-    width: 9px;
-  }
-}
 .payTableWrap {
   width: 100%;
   table {

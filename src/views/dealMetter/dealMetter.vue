@@ -17,7 +17,6 @@
         <div slot="itemText">个人中心</div>
       </tab-bar-item>
     </tab-bar>
-    <div class="header">办理事项</div>
     <div class="mettersWrap">
       <van-tabs
         animated
@@ -159,6 +158,7 @@
           </div>
         </van-tab>
       </van-tabs>
+      <div class="noMetterList" v-if="metterList.length==0">暂无数据</div>
     </div>
   </div>
 </template>
@@ -167,7 +167,8 @@
 import tabBar from "@/components/tabBar/tabBar";
 import tabBarItem from "@/components/tabBar/tabBarItem";
 import axios from "../../request";
-import { Toast } from "vant";
+axios.defaults.headers.post["Content-Type"] =
+  "application/x-www-form-urlencoded";
 export default {
   components: { tabBar, tabBarItem },
   data() {
@@ -183,15 +184,11 @@ export default {
       }
       axios
         .post("/api/Item/itemIndex", {
-          id: JSON.parse(localStorage.getItem("data")).compony_id,
+          id: JSON.parse(localStorage.getItem("data")).company_id,
+          // id: 1218,
           state: index,
         })
         .then((res) => {
-          Toast.loading({
-            message: "加载中...",
-            forbidClick: true,
-            className: "dealMetterToastStyle",
-          });
           if (res.code == 1) {
             if (res.data.length > 0) {
               for (const item of res.data) {
@@ -217,12 +214,8 @@ export default {
                 }
               }
               this.metterList = res.data;
-            } else {
-              Toast({ message: "暂无数据", className: "dealMetterToastStyle" });
-              return;
             }
           }
-          Toast.clear();
         });
     },
   },
@@ -235,26 +228,21 @@ export default {
 <style scoped lang="scss">
 #dealMetter {
   height: max-content;
-  padding-bottom: 200px;
-  background-color: #f2f4f8;
-  .header {
-    width: 100%;
-    height: 65px;
-    line-height: 90px;
-    border-bottom: 1px solid #f3f3f3;
-    text-align: center;
-    font-size: 17px;
-    font-weight: 700;
-    background-color: #fff;
-  }
   .mettersWrap {
+    /deep/.van-tabs__wrap {
+      box-shadow: 0 1px 5px #eee;
+    }
     .metterItem {
+      &:last-child {
+        margin-bottom: 100px;
+      }
       width: 92%;
       margin: 15px auto 0;
+      overflow: hidden;
       background-color: #fff;
       border-radius: 4px;
-      overflow: hidden;
       font-family: PingFang SC;
+      box-shadow: 0 0 10px 2px #ddd;
       .metterItemHead {
         width: 100%;
         height: 40px;
@@ -308,11 +296,16 @@ export default {
           height: 24px;
           line-height: 20px;
           border-radius: 5px;
-          background-color: #ff4f4f;
+          background-color: #ffa753;
           color: #fff;
           font-size: 11px;
         }
       }
+    }
+    .noMetterList {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 14px;
     }
   }
 }

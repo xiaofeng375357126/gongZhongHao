@@ -23,10 +23,15 @@
       <div class="userInfo">
         <p class="userName">{{myDate.nickname}}</p>
         <p v-if="myDate.telephone" class="userPhone">{{myDate.telephone}}</p>
-        <img v-else class="phoneBtn" src="@/assets/img/profile/phoneBtn.png" alt @click="phoneBtnClick" />
+        <img
+          v-else
+          class="phoneBtn"
+          src="@/assets/img/profile/phoneBtn.png"
+          @click="phoneBtnClick"
+          alt
+        />
       </div>
     </div>
-    <div class="header">个人中心</div>
     <div class="userAction">
       <div class="actionItem" @click="maskShow=true">
         <img src="@/assets/img/profile/danweibangding.png" alt />
@@ -44,6 +49,7 @@
     <van-overlay :show="maskShow">
       <div class="wrapper" @click.stop>
         <div class="block">
+          <van-icon name="cross" @click="maskShow=false" />
           <van-form @submit="onSubmit">
             <van-field
               v-model="number"
@@ -179,7 +185,6 @@ export default {
     top: 0;
     left: 0;
     width: 100%;
-    z-index: -1;
     .userInfo {
       position: absolute;
       top: 88px;
@@ -209,19 +214,10 @@ export default {
       border-radius: 50%;
     }
   }
-  .header {
-    width: 100%;
-    height: 65px;
-    line-height: 90px;
-    text-align: center;
-    font-size: 17px;
-    font-weight: 700;
-    color: #fff;
-  }
   .userAction {
     display: flex;
     justify-content: space-around;
-    margin-top: 160px;
+    margin-top: 220px;
     .actionItem {
       img {
         width: 55px;
@@ -240,8 +236,9 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100%;
+      height: 100vh;
       .block {
+        position: relative;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -257,6 +254,12 @@ export default {
           .van-field__error-message {
             display: none;
           }
+        }
+        .van-icon {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          font-size: 20px;
         }
       }
     }

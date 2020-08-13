@@ -17,7 +17,6 @@
         <div slot="itemText">个人中心</div>
       </tab-bar-item>
     </tab-bar>
-    <div class="header">资 料</div>
     <div class="bannerWrap">
       <img src="@/assets/img/banner2.png" alt />
       <p>{{companyInfo.title}}</p>
@@ -206,6 +205,7 @@ export default {
       this.getTableList();
     },
     getTableList() {
+      console.log()
       Toast.loading({
         message: "加载中...",
         forbidClick: true,
@@ -213,7 +213,7 @@ export default {
       });
       axios
         .post("/api/componyInfo/personnelList", {
-          id: JSON.parse(localStorage.getItem("data")).compony_id,
+          id: JSON.parse(localStorage.getItem("data")).company_id,
           member_tab_id: this.tabActiveIndex,
           limit: this.pageInfo.limit,
           page: this.pageInfo.page,
@@ -253,15 +253,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.header {
-  width: 100%;
-  height: 65px;
-  line-height: 90px;
-  border-bottom: 1px solid #f3f3f3;
-  text-align: center;
-  font-size: 17px;
-  font-weight: 700;
-}
 .bannerWrap {
   position: relative;
   width: 100%;
