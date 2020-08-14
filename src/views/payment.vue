@@ -36,7 +36,7 @@ export default {
     getTableList() {
       axios
         .post("/api/Item/payRecord", {
-          id: JSON.parse(localStorage.getItem("data")).company_id,
+          id: JSON.parse(localStorage.getItem("companyInfo")).id,
         })
         .then((res) => {
           if (res.code == 1) {

@@ -33,7 +33,7 @@
       </div>
     </div>
     <div class="userAction">
-      <div class="actionItem" @click="maskShow=true">
+      <div class="actionItem" @click="bindBtnClick">
         <img src="@/assets/img/profile/danweibangding.png" alt />
         <p>单位绑定</p>
       </div>
@@ -49,7 +49,7 @@
     <van-overlay :show="maskShow">
       <div class="wrapper" @click.stop>
         <div class="block">
-          <van-icon name="cross" @click="maskShow=false" />
+          <van-icon name="cross" @click="maskCloseBtnClick" />
           <van-form @submit="onSubmit">
             <van-field
               v-model="number"
@@ -121,6 +121,20 @@ export default {
               });
             }
           });
+      }
+    },
+    bindBtnClick() {
+      if (localStorage.getItem("number")) {
+        Toast({ message: "已绑定", className: "proFileToastStyle" });
+      } else {
+        this.maskShow = true;
+      }
+    },
+    maskCloseBtnClick() {
+      if (localStorage.getItem("number")) {
+        this.maskShow = false;
+      } else {
+        Toast({ message: "请先完成企业绑定", className: "proFileToastStyle" });
       }
     },
     phoneBtnClick() {

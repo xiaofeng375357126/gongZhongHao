@@ -184,7 +184,7 @@ export default {
       }
       axios
         .post("/api/Item/itemIndex", {
-          id: JSON.parse(localStorage.getItem("data")).company_id,
+          id: JSON.parse(localStorage.getItem("companyInfo")).id,
           // id: 1218,
           state: index,
         })

@@ -213,7 +213,7 @@ export default {
       });
       axios
         .post("/api/componyInfo/personnelList", {
-          id: JSON.parse(localStorage.getItem("data")).company_id,
+          id: JSON.parse(localStorage.getItem("companyInfo")).id,
           member_tab_id: this.tabActiveIndex,
           limit: this.pageInfo.limit,
           page: this.pageInfo.page,
@@ -400,10 +400,9 @@ export default {
   }
   .block {
     width: 100%;
-    height: 65%;
+    text-align: center;
     img {
-      width: 100%;
-      height: 100%;
+      width: 90%;
     }
   }
 }

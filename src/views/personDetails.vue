@@ -5,7 +5,12 @@
       <div class="personInfo">
         <img class="bgAllImg" src="@/assets/img/personDetails/kapian.png" alt />
         <div class="photoPic">
-          <img v-if="detailsInfo.photo" :src="detailsInfo.photo.url" alt />
+          <img
+            v-if="detailsInfo.photo"
+            :src="detailsInfo.photo.url"
+            :data-src="detailsInfo.photo.url"
+            @click="imgItemClick"
+          />
         </div>
         <p class="mainInfo">
           <span class="name">{{detailsInfo.name}}</span>
@@ -127,7 +132,7 @@ export default {
         .post("/api/componyInfo/personDeal", { id: this.$route.params.id })
         .then((res) => {
           if (res.code == 1) {
-            console.log(res.data[0])
+            console.log(res.data[0]);
             this.detailsInfo = res.data[0];
           }
         });
@@ -249,16 +254,16 @@ export default {
   }
   .paperImg {
     display: flex;
-    justify-content: space-between;
     flex-wrap: wrap;
     padding-top: 15px;
     .paperImgItem {
-      width: 100px;
+      width: 33%;
       margin-bottom: 15px;
       text-align: center;
       .img {
-        width: 100%;
+        width: 100px;
         height: 125px;
+        margin: 0 auto;
         box-shadow: 0 0 2px 2px #f3f3f3;
         img {
           width: 100%;
@@ -284,10 +289,9 @@ export default {
   }
   .block {
     width: 100%;
-    height: 65%;
+    text-align: center;
     img {
-      width: 100%;
-      height: 100%;
+      width: 90%;
     }
   }
 }
